@@ -1,29 +1,29 @@
 module Main where
 
 import WhoAuth
-import Config (setConf, loadConf, (##))
-import Logfile (logToFile)
+import Config               (setConf, loadConf, (##))
+import Logfile              (logToFile)
 
-import GHC.Conc (threadDelay)
+import GHC.Conc             (threadDelay)
 
-import Control.Monad (liftM2, unless)
-import Control.Applicative ((<$))
+import Control.Monad        (liftM2, unless)
+import Control.Applicative  ((<$))
 
-import Data.Maybe (fromMaybe)
-import Data.List (foldl')
+import Data.Maybe           (fromMaybe)
+import Data.List            (foldl')
 import Data.Time.LocalTime
-import Data.Time.Calendar (showGregorian)
+import Data.Time.Calendar   (showGregorian)
 
-import System.Environment (getArgs)
+import System.Environment   (getArgs)
 import System.Console.GetOpt
 
-import System.IO        (hFlush, stdout)
-import System.FilePath  (pathSeparator)
-import System.Directory ( getAppUserDataDirectory
-                        , doesFileExist
-                        , doesDirectoryExist
-                        , createDirectory
-                        )
+import System.IO            (hFlush, stdout)
+import System.FilePath      (pathSeparator)
+import System.Directory     ( getAppUserDataDirectory
+                            , doesFileExist
+                            , doesDirectoryExist
+                            , createDirectory
+                            )
 
 -- {{{ Data definitions
 
@@ -36,9 +36,9 @@ data Options = Options  { pName     :: String
                         , runLevel  :: RunLevel
                         , config    :: Maybe FilePath
                         , logFile   :: Maybe FilePath
-                        } deriving Show
+                        } -- deriving Show
 
-data RunLevel = Once | Background Int | Configuration deriving Show
+data RunLevel = Once | Background Int | Configuration -- deriving Show
 
 -- }}}
 
@@ -54,18 +54,11 @@ main = do
     opts'       <- loadConfig confPath defaultOptions
     let opts    =  parseArgs options args opts'
 
-
-    showInfo
-
     -- only for debugging:
     -- putStrLn $ show opts
 
-    -- TODO:
-    -- startLog logPath
-
+    showUsage
     runWithConfig opts
-
-    -- endLog logPath
 
 -- {{{ Settings
 
@@ -137,28 +130,39 @@ timeOfDay f = do
 -- | Get the resulting Options data
 parseArgs :: [OptDescr (Options -> Options)] -> [String] -> Options -> Options
 parseArgs options args defaults =
-    let opts  (o,_,_)   = o
+    let opt   (o,_,_)   = o
         other (_,n,_)   = n
-        gets            = getOpt Permute options args
 
-        newOpts         = foldl' (flip id) defaults $ opts gets
+        gets            = getOpt Permute options args
+        opts            = opt gets
+        others          = other gets
+
+        -- New Options from valid arguments
+        newOpts         = foldl' (flip id) defaults opts
+
         -- we still have to get the name and pw from the "non-options"
-        newName         = case length (other gets) of
-                             2 -> Just $ other gets !! 0
-                             _ -> name defaults
-        newPw           = case length (other gets) of
-                             2 -> Just $ other gets !! 1
-                             _ -> pw defaults
+        (newName,newPw) = case length others of
+                               2 -> (,) (Just $ others !! 0) -- name
+                                        (Just $ others !! 1) -- pw
+                               _ -> (name defaults, pw defaults)
     in newOpts { name = newName
                , pw   = newPw
                }
 
+-- | Info
+showInfo  = let name     = pName defaultOptions
+                version  = pVersion defaultOptions
+                header   = name ++ " " ++ show version
+            in
+            putStrLn header
+
 -- | Version & usage informations
-showInfo = let name     = pName defaultOptions
-               version  = pVersion defaultOptions
-               header   = name ++ " " ++ show version ++ "\n\nBenutzung: [OPTIONEN] [NAME] [PASSWORT]"
-           in
-           putStrLn $ usageInfo header options
+showUsage = let name     = pName defaultOptions
+                version  = pVersion defaultOptions
+                header   = "\nBenutzung: [OPTIONEN] [NAME] [PASSWORT]"
+            in do
+            showInfo
+            putStrLn $ usageInfo header options
 
 -- }}}
 
