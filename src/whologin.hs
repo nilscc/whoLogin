@@ -31,7 +31,7 @@ import qualified Graphics.UI.Gtk.Gdk.Events as Gdk
 -- Some basic settings :)
 
 appTitle, stuweHost, loginUrl, connStatusUrl :: String
-appTitle                = "whologin 2.0"
+appTitle                = "whoLogin 2.0"
 stuweHost               = "stuwe.net.uni-tuebingen.de"
 loginUrl                = "/netaccess/loginuser.html"
 connStatusUrl           = "/netaccess/connstatus.html"
