@@ -7,4 +7,4 @@ Completly new version of the old whoLogin. New features are:
 - Easy configuration
 - Skipping Arty5 site (optional)
 
-Screenshot: [http://n-sch.de/whologin-20.png](whologin 2.0)
+Screenshot: [whologin 2.0](http://n-sch.de/whologin-20.png)

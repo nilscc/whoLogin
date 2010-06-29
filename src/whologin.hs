@@ -152,7 +152,9 @@ createGui cfgMVar = do
     timeoutAddFull (yield >> return True) priorityDefaultIdle 50
 
     -- Systray -----------------------------------------------------------------
-    icon <- statusIconNewFromPixbuf =<< pixbufNewFromInline minusRed
+    pixbuf <- pixbufNewFromInline minusRed
+    icon <- statusIconNewFromPixbuf pixbuf
+    windowSetDefaultIcon (Just pixbuf)
 
     -- Load menu
 
@@ -420,12 +422,14 @@ performLogin cfgMVar statusIcon = do
                             Just icon -> liftIO . postGUIAsync $ do
 
                                 let title = appTitle ++ " - " ++ showStatus stat
-                                pixbuf <- pixbufNewFromInline $ if stat == Connected
-                                                                   then clearGreen
-                                                                   else minusRed
+                                    inline = if stat == Connected
+                                               then clearGreen
+                                               else minusRed
+                                pixbuf <- pixbufNewFromInline inline
 
                                 statusIconSetTooltip icon title
                                 statusIconSetFromPixbuf icon pixbuf
+                                windowSetDefaultIcon (Just pixbuf)
 
                             _ -> return ()
 
