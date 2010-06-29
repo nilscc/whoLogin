@@ -1,0 +1,25 @@
+Name:           whologin
+Version:        2.0
+Author:         Nils Schweinsberg
+
+Cabal-Version:  >= 1.2
+Build-Type:     Simple
+
+Executable whologin
+    Main-Is:            whologin.hs
+    Hs-Source-Dirs:     src
+    ghc-options:        -Wall -Werror -fno-warn-unused-do-bind -fno-warn-name-shadowing   
+    build-depends:
+        base == 4.*,
+        mtl == 1.1.*,
+        old-locale == 1.0.*,
+        filepath == 1.*,
+        directory == 1.*,
+        time == 1.1.*,
+        json == 0.4.*,
+        network == 2.2.*,
+        gtk == 0.11.*
+    pkgconfig-depends:  gdk-2.0
+    c-sources:
+        cbits/cleargreen.c
+        cbits/minusred.c

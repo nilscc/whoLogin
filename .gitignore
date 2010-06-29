@@ -1,0 +1,5 @@
+whologin
+dist/
+*.swp
+*.hi
+*.o
