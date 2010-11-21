@@ -8,7 +8,12 @@ Build-Type:     Simple
 Executable whologin
     Main-Is:            whologin.hs
     Hs-Source-Dirs:     src
-    ghc-options:        -Wall -Werror -fno-warn-unused-do-bind -fno-warn-name-shadowing   
+
+    if os(windows)
+        ghc-options:        -Wall -Werror -fno-warn-unused-do-bind -fno-warn-name-shadowing -optl-mwindows
+    else
+        ghc-options:        -Wall -Werror -fno-warn-unused-do-bind -fno-warn-name-shadowing
+
     build-depends:
         base == 4.*,
         mtl == 1.1.*,
@@ -18,7 +23,7 @@ Executable whologin
         time == 1.1.*,
         json == 0.4.*,
         network == 2.2.*,
-        gtk == 0.11.*
+        gtk == 0.12.*
     pkgconfig-depends:  gdk-2.0
     c-sources:
         cbits/cleargreen.c

@@ -2,7 +2,7 @@
 {-# LANGUAGE ScopedTypeVariables, PackageImports, ForeignFunctionInterface #-}
 
 module Main
-    (
+    ( main
     ) where
 
 import Control.Applicative
@@ -368,10 +368,10 @@ createGui cfgMVar = do
                                         Nothing -> Nothing
 
     on icon statusIconActivate $ do
-        vis <- get settings widgetVisible
+        vis <- get dialogLog {- settings -} widgetVisible
         if vis
-           then widgetHide settings
-           else windowPresent settings
+           then widgetHide dialogLog {- settings -}
+           else windowPresent dialogLog {- settings -}
 
 
     -- GUI initialised ---------------------------------------------------------
