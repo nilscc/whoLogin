@@ -1,0 +1,157 @@
+body {
+    background: #222;
+    color: #ccc;
+    margin: 4em auto 0;
+    width: 30em;
+    font-family: sans-serif;
+}
+
+h1#app-title {
+    color: white;
+}
+
+
+/* General settings */
+
+.important {
+    font-style: italic;
+}
+
+.error {
+    color: #d22;
+}
+
+.success {
+    color: #2d2;
+}
+
+p.form-error {
+    display: none;
+    margin: 0 0.5em 0;
+    padding: 0;
+    color: #d22;
+    font-size: 0.8em;
+}
+
+
+/* Ajax & menu */
+
+#ajax-status,
+menu {
+    font-size: 0.8em;
+    background: #444;
+    border: 1px solid #444;
+    color: #ddd;
+    padding: 0;
+    margin: 0;
+    border-radius: 0.3em;
+}
+
+#ajax-status {
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+#ajax-status p {
+    vertical-align: center;
+    display: inline-block;
+    margin: 0.2em 0 0.2em;
+}
+
+#ajax-status img {
+    float: left;
+    position: relative;
+    top: 2px;
+    margin: 0;
+    padding: 0 0.2em 0;
+}
+
+menu {
+    text-align: right;
+}
+
+menu ul {
+    margin: 0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    list-style: none;
+}
+
+menu ul li {
+    margin: 0.2em 0 0.2em;
+    display: inline-block;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+menu ul li a {
+    color: #ddd;
+    text-decoration: none;
+}
+
+.menu-active {
+    font-weight: bold;
+}
+
+
+/* Status */
+
+#status-cur {
+    margin-left: 0.3em;
+}
+
+/* Settings */
+
+#settings-user,
+#settings-server {
+    list-style: none;
+    padding-left: 0;
+}
+
+#settings-updated {
+    display: none;
+}
+
+label {
+    display: inline-block;
+    width: 12em;
+}
+
+input#submit-settings
+{
+    margin-top: 2em;
+}
+
+#settings-advanced
+{
+    font-size: 0.8em;
+    border: 1px solid #2c2c2c;
+    color: #ddd;
+    padding: 0;
+    margin: 0;
+    border-radius: 0.3em;
+}
+
+#settings-advanced p.ajax-link {
+    text-align: center;
+    font-weight: bold;
+    background: #2c2c2c;
+    border-radius: 0.3em;
+    padding: 0.2em 0 0.2em;
+    margin: 0;
+}
+
+#settings-advanced p.ajax-link a {
+    color: #ddd;
+    text-decoration: none;
+}
+
+#settings-advanced-content {
+    display: none;
+    padding: 0 0.5em 0;
+}
+
+#settings-advanced-content label {
+    width: 14.5em; /* 12em / 0.8em - 0.5em padding */
+}
