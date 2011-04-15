@@ -20,7 +20,7 @@ And run cabal:
     cabal install
 
 This will install your binary in *$HOME/.cabal/bin* (on linux) or
-*C:\Users\...\AppData\Roaming\cabal\bin* (on Windows).
+*C:\\Users\\...\\AppData\\Roaming\\cabal\\bin* (on Windows).
 
 After startup, open your webbrowser at http://localhost:8282 and adjust your
 settings.
