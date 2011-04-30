@@ -10,18 +10,19 @@ import "mtl" Control.Monad.Error
 import Control.Concurrent.MVar
 import Data.ByteString.UTF8
 import Data.Maybe
-import Snap.Http.Server
+import Snap.Http.Server                 hiding (Config)
 import Snap.Util.FileServe
 import Snap.Types                       hiding (ifTop, route, getParam, method, getRequest)
 import Text.Blaze
 import Text.Blaze.Renderer.Utf8
 import Text.JSONb                       as JS
 
-import qualified Snap.Types             as S
-import qualified Data.ByteString        as BS
-import qualified Data.ByteString.UTF8   as B8
-import qualified Data.ByteString.Lazy   as LBS
-import qualified Data.Trie              as T
+import qualified Snap.Types              as S
+import qualified Snap.Http.Server.Config as C
+import qualified Data.ByteString         as BS
+import qualified Data.ByteString.UTF8    as B8
+import qualified Data.ByteString.Lazy    as LBS
+import qualified Data.Trie               as T
 
 import Connect
 import Config
@@ -116,11 +117,12 @@ getRequest = lift S.getRequest
 runServer :: State -> IO ()
 runServer s = do
     Config { bind, port, access_log, error_log } <- readMVar (stateConf s)
-    httpServe (fromString bind)
-              port
-              "localhost"
-              (access_log)
-              (error_log)
+    let snapConfig =
+          C.addListen (C.ListenHttp (B8.fromString bind) port) $
+          C.setAccessLog access_log $
+          C.setErrorLog error_log $
+          C.defaultConfig
+    httpServe snapConfig
               (runReaderT server s)
 
 server :: Server ()
